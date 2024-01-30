@@ -1,0 +1,17 @@
+1. Celery is a task queue/job queue based on distributed message passing.
+2. Redis is an open source (BSD licensed), in-memory data structure queue based storage, used as a database, cache and message broker.
+3. Since broker is a message queue, it can be used to send messages to a worker using the principle of FIFO.
+4. But if we want to execute a task at a particular time or at a particular interval, we need a scheduler.
+5. Here, celery beat is used as a scheduler.
+6. Celery beat is a periodic task scheduler which will keep a keep tracking the database for tasks to be executed. At the scheduled time only, it will send that task to the broker.
+7. From there, the celery broker will send the task to the celery worker to execute.
+
+
+
+Q) Why to use Celery?
+A) By allowing celery to execute the task in a separate process, we are reducing the extra overload on our django server. This will also help in scaling the application and keeping out server faster, because we are not running the task in the same process.
+
+8. By using celery, we make our code asynchronous and can process multiple tasks at a time without having to wait for the present task to finish.
+9. After the worker is done processing the task, it will send the result back to the broker.
+
+10. Go through the screenshots attached to understand better.
