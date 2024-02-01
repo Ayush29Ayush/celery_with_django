@@ -15,3 +15,50 @@ A) By allowing celery to execute the task in a separate process, we are reducing
 9. After the worker is done processing the task, it will send the result back to the broker.
 
 10. Go through the screenshots attached to understand better.
+
+11. Celery uses multiprocessing to execute the tasks.
+
+# TODO -> READ THIS
+here's a breakdown of multiprocessing, multithreading, and asynchronous programming:
+
+Multiprocessing:
+
+Concept: Involves running multiple processes concurrently, each with its own memory space. These processes can execute tasks independently.
+Advantages:
+Utilizes multiple CPU cores efficiently, thus speeding up the execution of CPU-bound tasks.
+Offers better isolation between processes, enhancing stability.
+Disadvantages:
+Incurs overhead due to inter-process communication (IPC) for data sharing.
+Higher memory consumption compared to multithreading due to separate memory space for each process.
+
+
+
+Multithreading:
+
+Concept: Involves running multiple threads within the same process, sharing the same memory space. Threads execute independently but share resources like memory.
+Advantages:
+Efficient for I/O-bound tasks, such as network requests or file operations, as threads can continue execution while waiting for I/O operations to complete.
+Lower overhead compared to multiprocessing due to shared memory space.
+Disadvantages:
+Synchronization is required to prevent race conditions and ensure data integrity.
+Global Interpreter Lock (GIL) in some programming languages (like Python) limits the execution of multiple threads simultaneously in CPU-bound tasks.
+
+
+
+Asynchronous Programming:
+
+Concept: Allows non-blocking execution of tasks, enabling efficient resource utilization by allowing a single thread to handle multiple operations concurrently.
+Advantages:
+Well-suited for I/O-bound tasks, enabling efficient use of resources by avoiding blocking calls.
+Enhances scalability and responsiveness in applications, especially in network programming.
+Disadvantages:
+Complexity in managing asynchronous code, especially when dealing with callback chains or error handling.
+Limited applicability for CPU-bound tasks, as asynchronous operations typically rely on I/O operations to yield control back to the event loop.
+
+
+
+12. The workers acts as a supervisor and the spawns child processes to execute the tasks. Worker supervise over the group or pool of child processes.
+13. The size of the execution pool determines the number of tasks your Celery worker can process. So suppose, we say that the celery worker can spawn only 4 child processes, so at a single point of time, only 4 tasks can be executed.
+14. The number of processes that can be spawned is determined by the number of CPUs on the machine. If you have only one core and you want to spawn 4 processes, you will get an error. Multiprocessing will only work if you have more than one core.
+
+15. By default, the number of processes spawned is equal to the number of CPUs on the machine.
