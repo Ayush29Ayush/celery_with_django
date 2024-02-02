@@ -62,3 +62,7 @@ Limited applicability for CPU-bound tasks, as asynchronous operations typically 
 14. The number of processes that can be spawned is determined by the number of CPUs on the machine. If you have only one core and you want to spawn 4 processes, you will get an error. Multiprocessing will only work if you have more than one core.
 
 15. By default, the number of processes spawned is equal to the number of CPUs on the machine.
+
+16. "celery -A django_celery_project.celery worker --pool=solo -l info" will run the celery worker with the solo pool.
+17. "celery -A django_celery_project.celery worker -l info" will run the celery worker with the default pool that is equal to number of cores in your system.
+18. "celery -A django_celery_project.celery worker -l info --concurrency=4" will run the celery worker with the concurrency set to 4.
