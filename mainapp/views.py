@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from mainapp.tasks import test_func
+from send_mail_app.tasks import send_mail_func
 
 # Create your views here.
 #! READ THE COMMENTS BELOW CAREFULLY.
@@ -15,3 +16,7 @@ As a result, the "Done" response is sent back to the client as soon as the view 
 def test(request):
     test_func.delay() #! It calls test_func.delay(). This is using Celery's delayed task execution mechanism. Instead of executing test_func immediately, it schedules it to be executed asynchronously by a Celery worker.
     return HttpResponse("Done")
+
+def send_mail_to_all(request):
+    send_mail_func.delay()
+    return HttpResponse("Sent")

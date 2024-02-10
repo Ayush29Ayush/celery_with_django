@@ -137,5 +137,14 @@ CELERY_TIMEZONE = 'Asia/Kolkata'
 
 CELERY_RESULT_BACKEND = 'django-db'
 
-#CELERY BEAT
+# CELERY BEAT
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+# SMTP SETTINGS -> SMTP is a protocol which can send and receive email, but email clients typically use a program with SMTP for sending email.
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER ='ayushsenapati123@gmail.com'
+EMAIL_HOST_PASSWORD = "lwcffqijnydhoopd"
+DEFAULT_FROM_EMAIL = 'Celery <ayushsenapati123@gmail.com>'
