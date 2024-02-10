@@ -1,0 +1,42 @@
+1. django-admin startapp send_mail_app
+2. Go to myaccount.google.com, then go to Security, then go to App passwords, then create app password and copy it.
+3. Go to settings.py and add the following:
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER ='ayushsenapati123@gmail.com'
+EMAIL_HOST_PASSWORD = "lwcffqijnydhoopd"
+DEFAULT_FROM_EMAIL = 'Celery <ayushsenapati123@gmail.com>'
+4. Go to send_mail_app/tasks.py and add the following:
+'''
+from django.contrib.auth import get_user_model
+
+from celery import shared_task
+from django.core.mail import send_mail
+from django_celery_project import settings
+
+@shared_task(bind=True)
+def send_mail_func(self):
+    users = get_user_model().objects.all()
+    for user in users:
+        mail_subject = "Hi! Celery Testing"
+        message = "Test msg 123 "
+        to_email = user.email
+        send_mail(
+            subject = mail_subject,
+            message=message,
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[to_email],
+            fail_silently=True,
+        )
+    return "Done"
+'''
+5. Go to mailapp/views.py and add the following:
+def send_mail_to_all(request):
+    send_mail_func.delay()
+    return HttpResponse("Sent")
+6. Go to urls.py and add the following: 
+path('sendmail', views.send_mail_to_all, name="sendmail"),
+7. Now run the server and go to http://127.0.0.1:8000/sendmail and you will see the mail sent to all the users.
+8. 
