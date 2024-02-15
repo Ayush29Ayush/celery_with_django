@@ -1,0 +1,7 @@
+1. Go to django_celery_project/celery.py and add app.conf.beat_scheduler.
+2. Schedule a task
+3. python manage.py runserver 
+4. Run celery beat using => celery -A django_celery_project beat -l INFO
+5. Run worker using => celery -A django_celery_project.celery worker --pool=solo -l info
+6. Check admin page crontab and periodic tasks to see the scheduled task
+7. Either create a view and a url for that view for dynamic creation of tasks or directly go to celery.py and add the task in app.conf.beat_schedule
